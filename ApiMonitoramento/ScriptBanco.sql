@@ -1,21 +1,23 @@
 create database DadosMaquina;
 use DadosMaquina;
--- drop database DadosMaquina;
-
 
 create table dados(
 idDado int primary key auto_increment,
 dataHora datetime,
 freqAtual decimal(5,1),
 percentualCpu decimal(4,1),
-discoTotal decimal(5,2),
-discoUsado decimal(5,2),
-discoLivre decimal(5,2),
-memoriaTotal decimal(3,2),
-memoriaUsada decimal(3,2),
-memoriaLivre decimal (3,2)
+discoTotal decimal(6,2),
+discoUsado decimal(6,2),
+discoLivre decimal(6,2),
+memoriaTotal decimal(4,2),
+memoriaUsada decimal(4,2),
+memoriaLivre decimal (4,2)
 )auto_increment=1;
 
-select * from dados;
+create table openHardware(
+idTemp int primary key auto_increment,
+tempCPU int
+)auto_increment=100;
 
--- truncate table dados;
+select * from dados;
+select * from openHardware;

@@ -8,12 +8,12 @@ from datetime import date
 # from mysql.connector import errorcode
 i = 0
 
-while i<10:
+while i<200:
     try:
       con = mysql.connector.connect(
           host='localhost', 
-          user='aluno', 
-          password='sptech', 
+          user='root', 
+          password='HugoBossH22@', 
           database='DadosMaquina')
           
       print("Conexão ao banco estabelecida!")
@@ -76,5 +76,5 @@ while i<10:
     i+=1
     #con.close() #esse método serve para encerrar a captura de dados e envio ao banco
 
-    time.sleep(1.0)
+    time.sleep(0.1)
     
