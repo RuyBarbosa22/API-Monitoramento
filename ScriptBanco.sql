@@ -1,3 +1,21 @@
+create table empresa (
+    id int primary key identity (1,1),
+    nome varchar (45) not null,
+    cnpj char (18) not null,
+    codigo_cadastro VARCHAR(45) not null,
+    rua varchar (45) not null,
+    bairro varchar (45) not null,
+    numero char not null
+);
+
+create table Usuario (
+    id int primary key identity (1,1),
+    nome varchar (30) not null,
+    email varchar (30) not null unique,
+    tel varchar (11) not null unique,
+    senha varchar (20) not null,
+    fk_empresa int not null
+);
 
 create table computador (
 	id int primary key identity (200,1),
