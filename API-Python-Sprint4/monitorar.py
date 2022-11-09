@@ -1,11 +1,8 @@
-from pickletools import decimalnl_short
-from unicodedata import decimal
 import psutil
 import time
 import datetime
+import platform
 from datetime import date
-import os
-import math
 import mysql.connector
 from mysql.connector import errorcode
 # pretty library
@@ -24,55 +21,71 @@ while (i < 5):
            print("Credenciais erradas")
         else:
            print(error)
-        
-    """ else:
-    db_connection.close()
-    print('connection close') """
 
-    totalRAM =  round( (psutil.virtual_memory()[0]) * (10 ** -9),1)   
-    totalVirtual =  round((psutil.virtual_memory()[1]) * (10 ** -8),1)
-    totalDisco = round((psutil.disk_usage('/')[0]) * (10 ** -9))
-    freqMax = round(((psutil.cpu_freq().max) / 1000),2)
-    uploadPack = round((psutil.net_io_counters()[2]) * (10 ** -3))
-    downloadPack = round((psutil.net_io_counters()[3]) * (10 ** -3))
-    
+
+    # Tabela - computador    
+    sistema_operacional = platform.system()
+    disco_total = round((psutil.disk_usage('/')[0]) * (10 ** -9))
+    cpu_nucleos_fisicos = psutil.cpu_count(logical=False)
+    cpu_nucleos_logicos = psutil.cpu_count()
+    cpu_freq_maxima = round(((psutil.cpu_freq().max) / 1000),2)
+    memoria_total =  round( (psutil.virtual_memory()[0]) * (10 ** -9),1)
+
+    # Tabela - disco_dinamico
+    total = disco_total
+    usado = round((psutil.disk_usage('/')[1]) * (10 ** -9))
+    pct_usado = psutil.disk_usage('/')[3]
+    livre = psutil.disk_usage('/')[2]
+
+    # Tabela - cpu_dinamica
+    pct_uso = psutil.cpu_percent(interval = 1, percpu = True)[0] 
+    freq_uso = psutil.cpu_freq()[0]
+
+    # Tabela - memoria_dinamica
+    mem_total = psutil.virtual_memory()[0]
+    mem_usando = psutil.virtual_memory()[3]
+    mem_usando_pct = psutil.virtual_memory()[2]
+    mem_livre = psutil.virtual_memory()[4]
+
+    # Conversão de memórias de MB > GB
+    mem_total = round((mem_total *(10**-9)),2)
+    mem_usando = round((mem_usando*(10**-9)),2)
+    mem_livre = round((mem_livre*(10**-9)),2)
+
+
     dataHora = datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')
 
-    # print("\n")
-    # print('--- CPU ---')
-    # print("\n")
-
-    PrcntCPU =  psutil.cpu_percent() 
-    FreqCPU =  freqMax
-    PortasLogicas = psutil.cpu_count()
-
-    # print("\n")
-    # print('--- Memoria RAM ---')
-    # print("\n")
-    
-    TotalRAM = totalRAM
-    PrcntRAM = psutil.virtual_memory()[2] 
-    TotalVirtual = totalVirtual
-
-    # print("\n")
-    # print('--- Disco ---')
-    # print("\n")
-
-    TotalDisco = totalDisco
-    PrcntDisco = psutil.disk_usage('/')[3] 
-
-    # print("\n")
-    # print('--- Rede ---')
-    # print("\n")
-
-    Upload = uploadPack
-    Download = downloadPack
-    DropDown = psutil.net_io_counters()[6]
-    DropUp = psutil.net_io_counters()[7]
-
+    # Tabela - computador  
     cursor = db_connection.cursor()
-    sql = "INSERT INTO leitura (DataHora,PrcntCPU,FreqCPU,PortasLogicas,TotalRAM,PrcntRAM,TotalVirtual,TotalDisco,PrcntDisco,Upload,Download,DropDown,DropUp) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
-    values = [dataHora, PrcntCPU, FreqCPU, PortasLogicas, TotalRAM, PrcntRAM, TotalVirtual, TotalDisco, PrcntDisco, Upload, Download, DropDown, DropUp]
+    sql = "INSERT INTO computador (sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total) VALUES (%s,%s,%s,%s,%s,%s)"
+    values = [sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total]
+    cursor.execute(sql, values)
+    current_date = date.today()
+    formatted_date = current_date.strftime('%d/%m/%Y')
+
+
+    # Tabela - disco_dinamico
+    cursor = db_connection.cursor()
+    sql = "INSERT INTO computador (sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total) VALUES (%s,%s,%s,%s,%s,%s)"
+    values = [sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total]
+    cursor.execute(sql, values)
+    current_date = date.today()
+    formatted_date = current_date.strftime('%d/%m/%Y')
+
+
+    # Tabela - cpu_dinamica
+    cursor = db_connection.cursor()
+    sql = "INSERT INTO computador (sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total) VALUES (%s,%s,%s,%s,%s,%s)"
+    values = [sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total]
+    cursor.execute(sql, values)
+    current_date = date.today()
+    formatted_date = current_date.strftime('%d/%m/%Y')
+
+
+    # Tabela - memoria_dinamica
+    cursor = db_connection.cursor()
+    sql = "INSERT INTO computador (sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total) VALUES (%s,%s,%s,%s,%s,%s)"
+    values = [sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total]
     cursor.execute(sql, values)
     current_date = date.today()
     formatted_date = current_date.strftime('%d/%m/%Y')
