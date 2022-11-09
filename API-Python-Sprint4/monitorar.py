@@ -66,8 +66,8 @@ while (i < 5):
 
     # Tabela - disco_dinamico
     cursor = db_connection.cursor()
-    sql = "INSERT INTO computador (sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total) VALUES (%s,%s,%s,%s,%s,%s)"
-    values = [sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total]
+    sql = "INSERT INTO disco_dinamico (total, usado, pct_usado, livre, datahora) VALUES (%s,%s,%s,%s,%s)"
+    values = [total, usado, pct_usado, livre, dataHora]
     cursor.execute(sql, values)
     current_date = date.today()
     formatted_date = current_date.strftime('%d/%m/%Y')
@@ -75,8 +75,8 @@ while (i < 5):
 
     # Tabela - cpu_dinamica
     cursor = db_connection.cursor()
-    sql = "INSERT INTO computador (sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total) VALUES (%s,%s,%s,%s,%s,%s)"
-    values = [sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total]
+    sql = "INSERT INTO cpu_dinamica (pct_uso, freq_uso, livre, dataHora) VALUES (%s,%s,%s)"
+    values = [pct_uso, freq_uso, dataHora]
     cursor.execute(sql, values)
     current_date = date.today()
     formatted_date = current_date.strftime('%d/%m/%Y')
@@ -84,8 +84,8 @@ while (i < 5):
 
     # Tabela - memoria_dinamica
     cursor = db_connection.cursor()
-    sql = "INSERT INTO computador (sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total) VALUES (%s,%s,%s,%s,%s,%s)"
-    values = [sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total]
+    sql = "INSERT INTO memoria_dinamica (mem_total, mem_usando, mem_usando_pct, mem_livre, dataHora) VALUES (%s,%s,%s,%s,%s)"
+    values = [mem_total, mem_usando, mem_usando_pct, mem_livre, dataHora]
     cursor.execute(sql, values)
     current_date = date.today()
     formatted_date = current_date.strftime('%d/%m/%Y')

@@ -18,7 +18,7 @@ create table disco_dinamico (
     usado float,
     pct_usado float,
     livre float,
-    datahora datetime,
+    dataHora datetime,
     fk_computador int not null
 );
 
@@ -27,7 +27,7 @@ create table cpu_dinamica (
     foreign key (fk_computador) references computador(id),
 	pct_uso float,
     freq_uso float,
-    datahora datetime,
+    dataHora datetime,
     fk_computador int not null
 );
 
@@ -38,6 +38,6 @@ create table memoria_dinamica (
     mem_usando float,
     mem_usando_pct float,
     mem_livre float,
-    datahora datetime,
+    dataHora datetime,
     fk_computador int not null
 );  
