@@ -1,10 +1,10 @@
 create table empresa (
     id int primary key identity (1,1),
     nome varchar (45) not null,
+    email varchar (50) not null
     cnpj char (18) not null,
-    codigo_cadastro VARCHAR(45) not null,
-    rua varchar (45) not null,
-    bairro varchar (45) not null,
+    cep char (8) not null,
+    estado varchar (45) not null,
     numero char not null
 );
 
