@@ -55,25 +55,26 @@ while (i < 5):
 
     dataHora = datetime.datetime.now().strftime('%d/%m/%Y %H:%M:%S')
 
-    count = cursor.execute(f"""
+    cursor.execute("""
     INSERT INTO computador (sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total) 
-    VALUES ('{sistema_operacional}', {disco_total}, {cpu_nucleos_logicos}, {cpu_nucleos_fisicos}, {cpu_freq_maxima}, {memoria_total})""",
-    cnxn.commit())
+    VALUES (?,?,?,?,?,?)""",
+    sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total)
+    cnxn.commit()
 
-    count = cursor.execute(f"""
+    cursor.execute("""
     INSERT INTO disco_dimamico (total, usado, pct_usado, livre, datahora) 
-    VALUES ({total}, {usado}, {pct_usado}, {livre}, '{dataHora}')""",
-    cnxn.commit())
+    VALUES (?,?,?,?,?)""", total, usado, pct_usado, livre, dataHora)
+    cnxn.commit()
 
-    count = cursor.execute(f"""
+    cursor.execute("""
     INSERT INTO cpu_dinamica (pct_uso, freq_uso, livre, dataHora) 
-    VALUES ({pct_uso}, {freq_uso}, '{dataHora}')""",
-    cnxn.commit())
+    VALUES (?,?,?)""",pct_uso, freq_uso, dataHora)
+    cnxn.commit()
 
-    count = cursor.execute(f"""
+    cursor.execute("""
     INSERT INTO memoria_dinamica (mem_total, mem_usando, mem_usando_pct, mem_livre, dataHora) 
-    VALUES ({mem_total}, {mem_usando}, {mem_usando_pct}, {mem_livre}, '{dataHora}')""",
-    cnxn.commit())
+    VALUES (?,?,?,?,?)""",mem_total, mem_usando, mem_usando_pct, mem_livre, dataHora)
+    cnxn.commit()
 
     # # Tabela - computador  
     # sql = "INSERT INTO computador (sistema_operacional, disco_total, cpu_nucleos_logicos, cpu_nucleos_fisicos, cpu_freq_maxima, memoria_total) VALUES (%s,%s,%s,%s,%s,%s)"
