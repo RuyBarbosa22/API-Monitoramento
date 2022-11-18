@@ -5,7 +5,9 @@ create table empresa (
     cnpj char (18) not null,
     cep char (8) not null,
     estado varchar (45) not null,
-    numero char not null
+    numero varchar (13) not null,
+    senha varchar (25) not null,
+    codEmpresa varchar (25) not null
 );
 
 create table Usuario (
@@ -14,6 +16,7 @@ create table Usuario (
     email varchar (30) not null unique,
     tel varchar (11) not null unique,
     senha varchar (20) not null,
+    codEmpresa varchar (25) not null,
     fk_empresa int not null
 );
 
@@ -26,6 +29,7 @@ create table computador (
     cpu_nucleos_fisicos int not null,
 	cpu_freq_maxima float not null,
     memoria_total float not null,
+    codEmpresa varchar (25) not null,
     fk_empresa int not null
 );
 
