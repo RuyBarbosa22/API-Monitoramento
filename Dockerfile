@@ -11,4 +11,4 @@ RUN apt-get update && apt-get install build-essential unixodbc-dev -y
 RUN pip install pyodbc && pip install mysql-connector-python
 RUN pip install psutil
 WORKDIR /app
-CMD python3 api_python.py
+CMD python3 apipython.py
