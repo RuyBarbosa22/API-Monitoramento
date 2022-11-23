@@ -1,8 +1,9 @@
+-- Script Banco - API de Python
 create table empresa (
     id int primary key identity (1,1),
     nome varchar (45) not null,
     email varchar (50) not null,
-    cnpj char (18) not null,
+    cnpj char (14) not null,
     cep char (8) not null,
     estado varchar (45) not null,
     numero varchar (13) not null,
@@ -33,18 +34,6 @@ create table computador (
     fk_empresa int not null
 );
 
-create table computador_kotlin (
-    id int primary key identity (200,1),
-    foreign key (fk_empresa) references empresa(id),
-    serialNumber varchar (40),
-    sistema_operacional varchar (45) not null,
-    disco_total float not null,
-	cpu_nucleos_logicos int not null,
-    cpu_nucleos_fisicos int not null,
-    memoria_total float not null,
-    fk_empresa int not null
-);
-
 create table disco_dinamico (
 	id int primary key identity (300,1),
     foreign key (fk_computador) references computador(id),
@@ -56,25 +45,7 @@ create table disco_dinamico (
     fk_computador int not null
 );
 
-create table disco_dinamico_kotlin (
-	id int primary key identity (300,1),
-    foreign key (fk_computador) references computador(id),
-    total float,
-    qtdDisco int,
-    dataHora datetime,
-    fk_computador int not null
-);
-
 create table cpu_dinamica (
-	id int primary key identity (500,1)
-    foreign key (fk_computador) references computador(id),
-	pct_uso float,
-    freq_uso float,
-    dataHora datetime,
-    fk_computador int not null
-);
-
-create table cpu_dinamica_kotlin (
 	id int primary key identity (500,1)
     foreign key (fk_computador) references computador(id),
 	pct_uso float,
@@ -94,12 +65,44 @@ create table memoria_dinamica (
     fk_computador int not null
 );  
 
+-- Script Banco - API de Kotlin
+
+create table computador_kotlin (
+    id int primary key identity (200,1),
+    foreign key (fk_empresa) references empresa(id),
+    serialNumber varchar (40),
+    sistema_operacional varchar (45) not null,
+    disco_total float not null,
+	cpu_nucleos_logicos int not null,
+    cpu_nucleos_fisicos int not null,
+    memoria_total float not null,
+    fk_empresa int not null
+);
+
 create table memoria_dinamica_kotlin (
     id int primary key identity (200,2),
-    foreign key (fk_computador) references computador(id), 
+    foreign key (fk_computador) references computador_kotlin(id), 
     mem_total float,
     mem_usando float,
     mem_livre float,
     dataHora datetime,
     fk_computador int not null
 );  
+
+create table cpu_dinamica_kotlin (
+	id int primary key identity (500,1)
+    foreign key (fk_computador) references computador_kotlin(id),
+	pct_uso float,
+    freq_uso float,
+    dataHora datetime,
+    fk_computador int not null
+);
+
+create table disco_dinamico_kotlin (
+	id int primary key identity (300,1),
+    foreign key (fk_computador) references computador_kotlin(id),
+    total float,
+    qtdDisco int,
+    dataHora datetime,
+    fk_computador int not null
+);
