@@ -36,13 +36,14 @@ create table computador (
 create table computador_kotlin (
     id int primary key identity (200,1),
     foreign key (fk_empresa) references empresa(id),
+    serialNumber varchar (40),
     sistema_operacional varchar (45) not null,
     disco_total float not null,
 	cpu_nucleos_logicos int not null,
     cpu_nucleos_fisicos int not null,
     memoria_total float not null,
     fk_empresa int not null
-)
+);
 
 create table disco_dinamico (
 	id int primary key identity (300,1),
