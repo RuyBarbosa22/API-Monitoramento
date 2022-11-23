@@ -2,10 +2,8 @@ import psutil
 import time
 import datetime
 import platform
-from datetime import datetime
 import mysql.connector
 from mysql.connector import errorcode
-# pretty library
 import pyodbc
 # Some other example server values are
 # server = 'localhost\sqlexpress' # for a named instance
@@ -119,6 +117,3 @@ while (i < 5):
     time.sleep(1.5)
     print("Processo finalizado!")
     time.sleep(3)  
-
-    # conn.commit()
-    
