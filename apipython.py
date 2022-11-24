@@ -8,24 +8,28 @@ import pyodbc
 # Some other example server values are
 # server = 'localhost\sqlexpress' # for a named instance
 # server = 'myserver,port' # to specify an alternate port
-server = 'kotlin-na-azure.database.windows.net'
-database = 'Kotlin'
-username = 'Admin-Kotlin'
-password = '1sis@grupo5'
-# ENCRYPT defaults to yes starting in ODBC Driver 18. It's good to always specify ENCRYPT=yes on the client side to avoid MITM attacks.
-cnxn = pyodbc.connect('DRIVER={SQL Server};SERVER='+server+';DATABASE=' +
-                      database+';ENCRYPT=yes;UID='+username+';PWD=' + password)
-cursor = cnxn.cursor()
 
-conn = mysql.connector.connect(
-            host='172.17.0.2',
-            database='BancoPi',
-            user='root',
-            password='senha123'
-            port=3306
-        )
-print("Consegui! Conexão com o Banco de Dados MySQL efetuada com sucesso.")
-cursorMySQL = conn.cursor()
+try: 
+    server = 'kotlin-na-azure.database.windows.net'
+    database = 'Kotlin'
+    username = 'Admin-Kotlin'
+    password = '1sis@grupo5'
+    # ENCRYPT defaults to yes starting in ODBC Driver 18. It's good to always specify ENCRYPT=yes on the client side to avoid MITM attacks.
+    cnxn = pyodbc.connect('DRIVER={ODBC Driver 18 for SQL Server};SERVER='+server+';DATABASE=' +
+                        database+';ENCRYPT=yes;UID='+username+';PWD=' + password)
+    cursor = cnxn.cursor()
+
+    conn = mysql.connector.connect(
+                host='172.17.0.2',
+                database='BancoPi',
+                user='root',
+                password='senha123',
+                port=3306,
+            )
+    print("Consegui! Conexão com o Banco de Dados MySQL efetuada com sucesso.")
+    cursorMySQL = conn.cursor()
+except: 
+    print("conexão falhou")
 
 i = 0
 while (i < 5):
@@ -60,8 +64,6 @@ while (i < 5):
     mem_usando = round((mem_usando*(10**-9)), 2)
     mem_livre = round((mem_livre*(10**-9)), 2)
 
-    dataHora = datetime.now()
-    dataHora = dataHora.strftime("%d-%m-%Y %H:%M:%S")
     time.sleep(1.5)
 
     print("Executando...")
@@ -80,8 +82,8 @@ while (i < 5):
 
     cursor.execute("""
     INSERT INTO dbo.disco_dinamico (total, usado, pct_usado, livre, dataHora, fk_computador)
-    VALUES (?,?,?,?,?,?);""", 
-        (total, usado, pct_usado, livre, dataHora, 203,))
+    VALUES (?,?,?,?,getDate(),?);""", 
+        (total, usado, pct_usado, livre,  203,))
     cnxn.commit()
 
     cursorMySQL.execute("""
@@ -92,8 +94,8 @@ while (i < 5):
 
     cursor.execute("""
     INSERT INTO dbo.cpu_dinamica (pct_uso, freq_uso, dataHora,fk_computador)
-    VALUES (?,?,?,?);""", 
-        (pct_uso, freq_uso, dataHora, 203,))
+    VALUES (?,?,getDate(),?);""", 
+        (pct_uso, freq_uso, 203,))
     cnxn.commit()
 
     cursorMySQL.execute("""
@@ -104,8 +106,8 @@ while (i < 5):
 
     cursor.execute("""
     INSERT INTO dbo.memoria_dinamica (mem_total, mem_usando, mem_usando_pct, mem_livre, dataHora,fk_computador)
-    VALUES (?,?,?,?,?,?);""", 
-        (mem_total, mem_usando, mem_usando_pct, mem_livre, dataHora, 203,))
+    VALUES (?,?,?,?,getDate(),?);""", 
+        (mem_total, mem_usando, mem_usando_pct, mem_livre, 203,))
     cnxn.commit()
 
     cursorMySQL.execute("""
