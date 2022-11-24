@@ -32,7 +32,7 @@ except:
     print("conexão falhou")
 
 
-while (True)):
+while True:
     # Tabela - computador
     print("Processo iniciado!")
     sistema_operacional = platform.system()
