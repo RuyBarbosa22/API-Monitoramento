@@ -31,9 +31,8 @@ try:
 except: 
     print("conexão falhou")
 
-i = 0
-while (i < 5):
-    i += 1
+
+while (True)):
     # Tabela - computador
     print("Processo iniciado!")
     sistema_operacional = platform.system()
