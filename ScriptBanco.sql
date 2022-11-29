@@ -70,7 +70,7 @@ create table memoria_dinamica (
 create table computador_kotlin (
     id int primary key identity (200,1),
     foreign key (fk_empresa) references empresa(id),
-    serialNumber varchar (40),
+    serialNumber varchar (40) not null,
     sistema_operacional varchar (45) not null,
     disco_total float not null,
 	cpu_nucleos_logicos int not null,
